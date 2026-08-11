@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Python: pytest",
+      "type": "process",
+      "command": "/home/van-gogh/miniconda3/envs/deep_learning/bin/python",
+      "args": [
+        "-m",
+        "pytest",
+        "-v"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: ruff check",
+      "type": "process",
+      "command": "/home/van-gogh/miniconda3/bin/ruff",
+      "args": [
+        "check",
+        "src",
+        "tests"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "LaTeX: build book",
+      "type": "process",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "-interaction=nonstopmode",
+        "main.tex"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/notes"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Project: validate all",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Python: ruff check",
+        "Python: pytest",
+        "LaTeX: build book"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
