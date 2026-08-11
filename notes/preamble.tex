@@ -1,0 +1,76 @@
+% preamble.tex — Shared preamble for the LNN textbook
+
+% ── Document class ──────────────────────────────────────────────
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% ── Theorem environments ─────────────────────────────────────────
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem{exercise}{Exercise}[chapter]
+
+% ── Math operators ───────────────────────────────────────────────
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\sigmoid}{\sigma}
+\DeclareMathOperator{\tanhact}{tanh}
+\DeclareMathOperator{\ReLU}{ReLU}
+
+% ── Graphics and color ───────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% ── Hyperlinks ──────────────────────────────────────────────────
+\usepackage[colorlinks=true,
+            linkcolor=blue,
+            citecolor=blue,
+            urlcolor=blue]{hyperref}
+
+% ── Bibliography ─────────────────────────────────────────────────
+\usepackage[backend=bibtex,
+            style=numeric,
+            sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+% ── Page layout ─────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Captions and references ──────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% ── Code listings ────────────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+}
+
+% ── Cross-referencing ────────────────────────────────────────────
+\usepackage[capitalize,nameinlink]{cleveref}
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Equation}{Equations}

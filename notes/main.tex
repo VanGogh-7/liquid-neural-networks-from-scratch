@@ -1,0 +1,105 @@
+% main.tex — Liquid Neural Networks from First Principles
+
+\documentclass[12pt,letterpaper]{book}
+
+\input{preamble}
+
+\title{Liquid Neural Networks \\ from First Principles}
+\author{Learning Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+This book is a companion to the \texttt{liquid-neural-networks-from-scratch} learning repository.
+It is designed as a self-contained, first-principles introduction to Liquid Neural Networks, from
+continuous-time mathematical foundations through modern scalable architectures.
+
+The book assumes prior knowledge of linear algebra, multivariable calculus, deep learning fundamentals,
+and PyTorch. It does \emph{not} assume prior knowledge of ordinary differential equations, dynamical
+systems, numerical analysis, or control theory — these are taught as they become necessary.
+
+Each chapter corresponds to one Stage of the curriculum and follows a consistent structure:
+historical motivation, mathematical formulation, derivation, implementation, experiments, and discussion.
+
+\tableofcontents
+
+\mainmatter
+
+% ── PART I — Mathematical & Continuous-Time Foundations ────────────
+\part{Mathematical \& Continuous-Time Foundations}
+
+\include{chapters/00_mathematical_language}
+\include{chapters/01_ode_essentials}
+\include{chapters/02_dynamical_systems}
+\include{chapters/03_numerical_ode}
+
+% ── PART II — Continuous-Time Neural Networks ──────────────────────
+\part{Continuous-Time Neural Networks}
+
+\include{chapters/04_continuous_time_rnn}
+\include{chapters/05_neural_ode}
+
+% ── PART III — Birth of Liquid Neural Networks ─────────────────────
+\part{Birth of Liquid Neural Networks}
+
+\include{chapters/06_ncp}
+\include{chapters/07_ltc_foundations}
+\include{chapters/08_ltc_implementation}
+\include{chapters/09_ltc_theory}
+
+% ── PART IV — Closed-Form Liquid Networks ──────────────────────────
+\part{Closed-Form Liquid Networks}
+
+\include{chapters/10_cfc_theory}
+\include{chapters/11_cfc_implementation}
+
+% ── PART V — Liquid State-Space Models ─────────────────────────────
+\part{Liquid State-Space Models}
+
+\include{chapters/12_state_space_models}
+\include{chapters/13_s4}
+\include{chapters/14_liquid_s4}
+
+% ── PART VI — Modern Liquid Architectures ──────────────────────────
+\part{Modern Liquid Architectures}
+
+\include{chapters/15_stc}
+\include{chapters/16_lrc}
+\include{chapters/17_lrcu}
+\include{chapters/18_lrcssm}
+\include{chapters/19_frontiers}
+
+% ── References ─────────────────────────────────────────────────────
+\backmatter
+
+\appendix
+\chapter{Notation Reference}
+\label{app:notation}
+\input{reference/notation}
+
+\chapter{Calculus Reference}
+\label{app:calculus}
+\input{reference/calculus}
+
+\chapter{Linear Algebra Reference}
+\label{app:linear_algebra}
+\input{reference/linear_algebra}
+
+\chapter{ODE Reference}
+\label{app:ode}
+\input{reference/ode}
+
+\chapter{Tensor Shape Reference}
+\label{app:tensor_shapes}
+\input{reference/tensor_shapes}
+
+\printbibliography[heading=bibintoc,title={References}]
+
+\end{document}
