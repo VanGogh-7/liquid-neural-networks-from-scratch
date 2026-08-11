@@ -2,8 +2,8 @@
 
 - **Stage**: 00 — Mathematical Language and Notation
 - **State**: READ
-- **Completed**: Repository bootstrap and baseline audit
-- **Current Task**: First learner interaction — review the Stage 00 reading scope and canonical notation policy
-- **Open Questions**: None yet
+- **Completed**: Repository bootstrap, baseline audit, and Stage 00 READ Block 1 presentation
+- **Current Task**: Learner answers the conceptual questions about the mapping $(t, \mathbf{x}, \mathbf{u}) \mapsto \dot{\mathbf{x}}$ and its batched PyTorch representation
+- **Open Questions**: READ-00-1 through READ-00-4 are awaiting learner answers
 - **Blocked**: No
-- **Next**: Stage 00 — READ: learner reviews the notation-policy scope before explanation begins
+- **Next**: Review the learner's answers; remain in READ until the first conceptual block is understood
