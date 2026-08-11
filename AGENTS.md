@@ -17,6 +17,12 @@ This is a **research-learning repository**, not a production ML framework. The p
 
 When the learner explicitly asks for help with a specific implementation step, provide it — but the default teaching workflow takes priority over code generation.
 
+### Learner-facing language and equation display
+
+- Use Chinese prose when interacting with the learner, but keep mathematical and technical terminology in English. Use terms such as `domain`, `codomain`, `range`, `scalar`, `vector`, `matrix`, `gradient`, `Jacobian`, and `Hessian` without forced Chinese translations.
+- In terminal chat, present equations as compact monospaced plain text by default because display LaTeX is not reliably rendered. Use display LaTeX only when its structure materially improves understanding.
+- Repository artifacts remain entirely in English and use proper LaTeX notation; the terminal-chat display convention does not change the textbook's typesetting standard.
+
 ## 3. Session Recovery
 
 At the start of every new session, if context is limited, read (in order):
