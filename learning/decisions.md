@@ -63,3 +63,9 @@ Significant design choices and their rationale.
 **Decision**: Build the evolving textbook with the `book` class options `oneside,openany`.
 **Rationale**: The default two-sided `openright` layout inserted blank pages between stub chapters and Parts, inflating the bootstrap PDF without adding content.
 **Impact**: Chapters may start on either page during development; publication layout can be reconsidered when the manuscript is mature.
+
+## Decision 011 — External Learning, Repository-Side Synthesis
+
+**Decision**: The learner conducts primary Stage teaching and derivation with a web-based GPT, then submits learning outcomes to Hermes for repository-side synthesis.
+**Rationale**: The web interface provides a better learning and mathematical display experience, while Hermes is better positioned to maintain code, tests, experiments, LaTeX, state, and Git in the local repository.
+**Impact**: Hermes does not initiate full lessons by default. It reviews submitted learning evidence, resolves targeted gaps, and then produces and validates the applicable English repository artifacts without crossing Stage boundaries.

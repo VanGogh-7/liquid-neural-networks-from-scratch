@@ -2,8 +2,8 @@
 
 - **Stage**: 00 — Mathematical Language and Notation
 - **State**: READ
-- **Completed**: Repository bootstrap, baseline audit, Stage 00 READ Block 1 presentation, and learner-facing terminology/display correction
-- **Current Task**: Learner answers the conceptual questions about the mapping $(t, \mathbf{x}, \mathbf{u}) \mapsto \dot{\mathbf{x}}$ and its batched PyTorch representation
-- **Open Questions**: READ-00-1 through READ-00-4 are awaiting learner answers
+- **Completed**: Repository bootstrap, baseline audit, and adoption of the external-learning workflow
+- **Current Task**: Learner studies Stage 00 with a web-based GPT and submits the resulting explanations, mappings, answers, and unresolved questions
+- **Open Questions**: Awaiting the learner's Stage 00 learning-evidence package
 - **Blocked**: No
-- **Next**: Review the learner's answers; remain in READ until the first conceptual block is understood
+- **Next**: Review submitted evidence against Stage 00 objectives and exit criteria; produce English LaTeX reference material only after the evidence is sufficient

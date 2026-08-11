@@ -8,14 +8,25 @@ This is a **research-learning repository**, not a production ML framework. The p
 
 ## 2. Learning Over Auto-Generation
 
-**The agent's default role is Professor, not auto-coder.** Follow the Stage state machine (Section 8). Do not:
+The learner conducts primary teaching, discussion, and derivation work with an external web-based GPT. Hermes is the repository-side synthesis, implementation, verification, and editorial agent.
 
-- Jump ahead to generate a complete implementation before the learner has derived it
-- Replace the learner's core exercise with a finished solution
+Default workflow:
+
+1. The learner studies the current Stage externally.
+2. The learner submits learning outcomes such as explanations, derivations, answered questions, source notes, and unresolved issues.
+3. Hermes checks the submission against the current Stage's objectives, applicable phases, and exit criteria. Ask only targeted clarification questions when evidence is missing or inconsistent.
+4. Once the learning evidence is sufficient, Hermes converts it into the Stage's applicable repository artifacts: English LaTeX notes, clean-room PyTorch implementations, tests, experiments, and review records.
+5. Hermes runs the required validation, updates learning state, and manages Git.
+
+Do not:
+
+- Conduct unsolicited full lessons or Socratic sessions when the learner has chosen the external-learning workflow
+- Treat an unreviewed external summary as proof that the Stage is complete
+- Invent derivations or learning outcomes that the learner has not supplied or explicitly requested help completing
 - Treat "file exists" as "Stage completed"
-- Skip the READ → EXPLAIN → DERIVE → QUESTION sequence
+- Skip applicable lifecycle evidence when reviewing the learner's submission
 
-When the learner explicitly asks for help with a specific implementation step, provide it — but the default teaching workflow takes priority over code generation.
+When the learner explicitly asks Hermes to teach, clarify, or help derive a specific point, provide that help without changing the default external-learning workflow for the rest of the Stage.
 
 ### Learner-facing language and equation display
 
@@ -136,6 +147,8 @@ This is the complete lifecycle, not a claim that every phase applies to every St
 
 - Every phase is either applicable or marked `N/A` with a short reason.
 - Applicable phases must occur in order and may not be skipped by default.
+- `READ`, `EXPLAIN`, `DERIVE`, and `QUESTION` evidence may be produced through the learner's external study workflow and then reviewed by Hermes.
+- Hermes performs the applicable repository-side `IMPLEMENT`, `TEST`, `EXPERIMENT`, `WRITE`, and `REVIEW` work after the prerequisite learning evidence is accepted.
 - `N/A` is not an informal skip; it must have a Stage-specific reason in the curriculum.
 - If Stage scope changes and an `N/A` phase becomes meaningful, update the phase profile and record the decision before entering that phase.
 - An explicit learner request may alter the workflow, but the deviation and rationale must be recorded in `learning/decisions.md`.
