@@ -45,7 +45,7 @@ src/lnn/             Pure PyTorch implementations (ode, rnn, ltc, cfc, ssm, ...)
 tests/               pytest unit tests per module
 experiments/         Unified benchmarks (foundations, dynamics, timeseries, ...)
 notes/               LaTeX textbook (chapters, references, figures)
-learning/            Curriculum state, paper log, decisions, questions
+learning/            Curriculum state, structured handoffs, paper log, decisions
 reference/           Timeline, notation reference sheets
 ```
 
@@ -58,6 +58,22 @@ ruff check src/
 ```
 
 Start reading at `learning/curriculum.md` and `learning/current_stage.md`.
+
+## Learning and Repository Workflow
+
+The learner completes the conceptual lifecycle with the ChatGPT web interface:
+
+```text
+READ → EXPLAIN → DERIVE → QUESTION → LEARNED
+```
+
+The resulting structured handoff is stored under `learning/handoffs/`. Hermes then performs the Stage-aware repository lifecycle:
+
+```text
+HANDOFF → INTEGRATE → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE
+```
+
+See `learning/handoffs/TEMPLATE.md` for the required handoff structure. Stages may mark repository phases `N/A` with reasons in `learning/curriculum.md`.
 
 ## Reference Implementations
 

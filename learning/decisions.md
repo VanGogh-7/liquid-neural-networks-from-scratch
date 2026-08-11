@@ -64,8 +64,14 @@ Significant design choices and their rationale.
 **Rationale**: The default two-sided `openright` layout inserted blank pages between stub chapters and Parts, inflating the bootstrap PDF without adding content.
 **Impact**: Chapters may start on either page during development; publication layout can be reconsidered when the manuscript is mature.
 
-## Decision 011 — External Learning, Repository-Side Synthesis
+## Decision 011 — Split Learning and Repository Lifecycles
 
-**Decision**: The learner conducts primary Stage teaching and derivation with a web-based GPT, then submits learning outcomes to Hermes for repository-side synthesis.
+**Decision**: The learner conducts the `READ → EXPLAIN → DERIVE → QUESTION → LEARNED` lifecycle with a web-based GPT. Hermes conducts the Stage-aware `HANDOFF → INTEGRATE → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE` repository lifecycle.
 **Rationale**: The web interface provides a better learning and mathematical display experience, while Hermes is better positioned to maintain code, tests, experiments, LaTeX, state, and Git in the local repository.
-**Impact**: Hermes does not initiate full lessons by default. It reviews submitted learning evidence, resolves targeted gaps, and then produces and validates the applicable English repository artifacts without crossing Stage boundaries.
+**Impact**: `learning/current_stage.md` tracks learning and repository status separately. Hermes does not initiate full lessons by default or duplicate completed learning, and repository work cannot silently stand in for learning evidence.
+
+## Decision 012 — Structured Stage Handoffs
+
+**Decision**: Each Stage may use `learning/handoffs/stage_NN.md` as the authoritative bridge from external learning to repository integration.
+**Rationale**: A stable, structured artifact is more reliable than reconstructing mathematical conclusions from incomplete chat history.
+**Impact**: Hermes validates the handoff before repository integration, does not infer unsupported claims, and preserves the distinction between learner-derived conclusions, textbook facts, and paper-specific claims.

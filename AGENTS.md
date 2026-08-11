@@ -6,15 +6,15 @@ Instructions for Hermes and other coding agents working in this repository.
 
 This is a **research-learning repository**, not a production ML framework. The primary goal is to help the learner develop deep, first-principles understanding of Liquid Neural Networks. Code correctness and educational clarity take precedence over performance or API elegance.
 
-## 2. Learning Over Auto-Generation
+## 2. External Learning and Repository Integration
 
 The learner conducts primary teaching, discussion, and derivation work with an external web-based GPT. Hermes is the repository-side synthesis, implementation, verification, and editorial agent.
 
 Default workflow:
 
 1. The learner studies the current Stage externally.
-2. The learner submits learning outcomes such as explanations, derivations, answered questions, source notes, and unresolved issues.
-3. Hermes checks the submission against the current Stage's objectives, applicable phases, and exit criteria. Ask only targeted clarification questions when evidence is missing or inconsistent.
+2. The learner submits a structured handoff under `learning/handoffs/` containing explanations, derivations, answered questions, source notes, implementation requirements, and unresolved issues.
+3. Hermes treats the handoff as the authoritative bridge from learning to repository work and checks it against the current Stage's objectives, applicable phases, and exit criteria. Ask only targeted clarification questions when evidence is missing or inconsistent.
 4. Once the learning evidence is sufficient, Hermes converts it into the Stage's applicable repository artifacts: English LaTeX notes, clean-room PyTorch implementations, tests, experiments, and review records.
 5. Hermes runs the required validation, updates learning state, and manages Git.
 
@@ -23,6 +23,7 @@ Do not:
 - Conduct unsolicited full lessons or Socratic sessions when the learner has chosen the external-learning workflow
 - Treat an unreviewed external summary as proof that the Stage is complete
 - Invent derivations or learning outcomes that the learner has not supplied or explicitly requested help completing
+- Infer major mathematical conclusions from incomplete chat snippets when a Stage handoff is available
 - Treat "file exists" as "Stage completed"
 - Skip applicable lifecycle evidence when reviewing the learner's submission
 
@@ -41,7 +42,8 @@ At the start of every new session, if context is limited, read (in order):
 1. `AGENTS.md` (this file)
 2. `learning/current_stage.md`
 3. The relevant Stage section in `learning/curriculum.md`
-4. Any necessary code or LaTeX files for the current Stage
+4. The current Stage handoff under `learning/handoffs/`, if present
+5. Any necessary code or LaTeX files for the current Stage
 
 Do **not** rely on chat history to recover course state — the learning directory is the source of truth.
 
@@ -115,6 +117,9 @@ When writing code, bridge notation to tensor shapes explicitly in comments:
 - English comments only
 - `ruff` for linting, `pytest` for tests
 - Follow existing module style; do not reformat unwritten code
+- For algorithmic Stages, translate accepted handoff mathematics into readable, mathematically traceable educational PyTorch implementations
+- Document the correspondence between equations, tensor shapes, and update steps at public interfaces and non-obvious numerical operations
+- Keep dependencies minimal; reference implementations remain correctness oracles rather than implementation shortcuts
 
 ## 6. LaTeX Conventions
 
@@ -124,6 +129,11 @@ When writing code, bridge notation to tensor shapes explicitly in comments:
 - Use `\label`, `\ref`, `\autoref` extensively for cross-chapter linking
 - Theorem/definition/remark/example environments from `amsthm`
 - All mathematical notation must match the Stage 00 convention
+- Treat LaTeX as the final compiled learning record, not the default interactive teaching interface
+- Prioritize mathematical correctness, readable aligned derivations, and useful cross-references
+- Integrate only material supported by the accepted handoff or independently verified sources
+- Distinguish learner-derived conclusions, general textbook facts, and paper-specific claims in the prose; cite paper-specific claims
+- Preserve original paper notation on first presentation and map it explicitly to repository notation
 
 ## 7. Reference Implementations — Oracle-Only Rule
 
@@ -135,35 +145,43 @@ The following libraries may **only** be used as correctness oracles:
 
 **Principle**: clean-room / paper-guided implementation first, then compare against reference. Wrapping a third-party model and calling it "our implementation" is forbidden.
 
-## 8. Stage State Machine
+## 8. Split Stage Lifecycles
 
-Every Stage follows this default sequence:
+Learning lifecycle, performed primarily outside Hermes:
 
 ```
-READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE
+READ → EXPLAIN → DERIVE → QUESTION → LEARNED
 ```
 
-This is the complete lifecycle, not a claim that every phase applies to every Stage. Each Stage's row in the phase-profile table in `learning/curriculum.md` is authoritative:
+Repository lifecycle, performed by Hermes after a structured handoff:
 
-- Every phase is either applicable or marked `N/A` with a short reason.
-- Applicable phases must occur in order and may not be skipped by default.
-- `READ`, `EXPLAIN`, `DERIVE`, and `QUESTION` evidence may be produced through the learner's external study workflow and then reviewed by Hermes.
-- Hermes performs the applicable repository-side `IMPLEMENT`, `TEST`, `EXPERIMENT`, `WRITE`, and `REVIEW` work after the prerequisite learning evidence is accepted.
-- `N/A` is not an informal skip; it must have a Stage-specific reason in the curriculum.
-- If Stage scope changes and an `N/A` phase becomes meaningful, update the phase profile and record the decision before entering that phase.
+```
+HANDOFF → INTEGRATE → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE
+```
+
+`learning/current_stage.md` tracks `Learning Status` and `Repository Status` separately. `LEARNED` means the learner has completed and verified the learning lifecycle; it does not mean repository work is complete. `WAITING_FOR_HANDOFF` is the repository pre-lifecycle sentinel used before Hermes receives an adequate handoff.
+
+Each Stage's phase-profile row in `learning/curriculum.md` is authoritative:
+
+- Every learning and repository phase is either applicable or marked `N/A` with a short reason.
+- Applicable phases remain ordered and may not be skipped by default.
+- Repository work starts only after the handoff is received and checked for sufficient evidence.
+- `N/A` is not an informal skip; it requires a Stage-specific reason in the curriculum.
+- If Stage scope changes and an `N/A` phase becomes meaningful, update the profile and record the decision before entering that phase.
 - An explicit learner request may alter the workflow, but the deviation and rationale must be recorded in `learning/decisions.md`.
 
 ## 9. Stage Boundaries
 
 - Do **not** cross Stage boundaries without completing the current Stage's exit criteria
 - Do **not** skip derivations because "the code would be easier to write"
-- Do **not** complete the learner's core implementation tasks automatically
+- Do **not** fabricate learning evidence to justify implementation; after an accepted handoff, Hermes is responsible for the Stage's applicable implementation work
 
 ## 10. State File Updates
 
 After every meaningful Stage transition or milestone:
 
 - Update `learning/current_stage.md`
+- Create or update the Stage handoff under `learning/handoffs/`
 - Record architectural decisions in `learning/decisions.md`
 - Log paper reading progress in `learning/paper_log.md`
 
@@ -183,6 +201,7 @@ Do **not** silently perpetuate errors discovered during teaching.
 ```
 learning/current_stage.md   ← session entry point
 learning/curriculum.md      ← full Stage catalog
+learning/handoffs/          ← authoritative learning-to-repository handoffs
 learning/paper_log.md       ← paper reading tracker
 learning/decisions.md       ← architectural decisions
 notes/main.tex              ← LaTeX book root
