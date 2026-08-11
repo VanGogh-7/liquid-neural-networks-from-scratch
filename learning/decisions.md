@@ -45,3 +45,21 @@ Significant design choices and their rationale.
 **Decision**: Hermes manages routine Git operations and GitHub synchronization for this repository.
 **Rationale**: Centralized stewardship keeps commits aligned with verified learning milestones and the Stage state machine.
 **Impact**: Hermes may commit and push verified work, while destructive Git operations still require explicit learner approval.
+
+## Decision 008 — Stage-Aware Learning Phases
+
+**Decision**: Every Stage explicitly declares applicable lifecycle phases and gives a reason for each `N/A` phase.
+**Rationale**: A fixed lifecycle is useful for implementation Stages but creates meaningless work in notation, theory, and survey Stages if applied mechanically.
+**Impact**: Applicable phases remain mandatory and ordered; changing a phase profile requires a recorded curriculum decision.
+
+## Decision 009 — Canonical Mathematical and Numerical Conventions
+
+**Decision**: Use column-vector mathematics, output-row/input-column Jacobians, batch-first tensors, time-first ODE callables, explicit paper-notation translation, and task-dependent float64/float32 precision.
+**Rationale**: These conventions prevent silent orientation, signature, and precision mismatches across derivations, PyTorch code, and source papers.
+**Impact**: New notes, implementations, and tests must follow the conventions in `AGENTS.md` or document a justified interface exception.
+
+## Decision 010 — Development-Friendly Book Pagination
+
+**Decision**: Build the evolving textbook with the `book` class options `oneside,openany`.
+**Rationale**: The default two-sided `openright` layout inserted blank pages between stub chapters and Parts, inflating the bootstrap PDF without adding content.
+**Impact**: Chapters may start on either page during development; publication layout can be reconsidered when the manuscript is mature.

@@ -32,27 +32,62 @@ Do **not** rely on chat history to recover course state — the learning directo
 
 This repository uses a unified notation defined in Stage 00. Core conventions:
 
-| Symbol            | Meaning                  | Typical Shape       |
-| ----------------- | ------------------------ | ------------------- |
-| $t$               | continuous time          | scalar              |
-| $\Delta t$        | time step                | scalar              |
-| $\mathbf{x}(t)$   | state vector             | $(d_x,)$            |
-| $\mathbf{u}(t)$   | input vector             | $(d_u,)$            |
-| $\mathbf{h}(t)$   | hidden state             | $(d_h,)$            |
-| $\mathbf{y}(t)$   | output                   | $(d_y,)$            |
-| $\mathbf{W}$      | weight matrix            | $(d_{out}, d_{in})$ |
-| $\boldsymbol{\theta}$ | parameters           | —                   |
-| $\tau$            | time constant            | scalar or per-neuron|
-| $\dot{\mathbf{x}}$| time derivative          | same as $\mathbf{x}$|
-| $\odot$           | element-wise product     | —                   |
+| Symbol | Meaning | Typical mathematical shape |
+| --- | --- | --- |
+| $t$ | continuous time | scalar |
+| $k$ | discrete observation/sample index | integer scalar |
+| $t_k$ | time of the $k$-th observation | scalar |
+| $\Delta t_k = t_{k+1} - t_k$ | interval after observation $k$ | scalar |
+| $\mathbf{x}(t)$ | dynamical state vector | $d_x \times 1$ |
+| $\mathbf{u}(t)$ | input or control vector | $d_u \times 1$ |
+| $\mathbf{h}(t)$ | hidden state when distinct from $\mathbf{x}(t)$ | $d_h \times 1$ |
+| $\mathbf{y}(t)$ | output vector | $d_y \times 1$ |
+| $\mathbf{W}$ | weight matrix | $d_{\mathrm{out}} \times d_{\mathrm{in}}$ |
+| $\boldsymbol{\theta}$ | model parameters | context-dependent |
+| $\tau$ | time constant | scalar or per-state vector |
+| $\dot{\mathbf{x}}$ | time derivative | same shape as $\mathbf{x}$ |
+| $\odot$ | element-wise product | operands have compatible shapes |
 
 Always annotate shapes on first use in a formula, e.g. $\mathbf{x}(t) \in \mathbb{R}^{d_x}$.
+
+### Vector orientation, gradients, and Jacobians
+
+- Mathematical vectors are column vectors by default. Thus $\mathbf{y}=\mathbf{W}\mathbf{x}$ uses $\mathbf{x}\in\mathbb{R}^{d_{\mathrm{in}}}$ and $\mathbf{W}\in\mathbb{R}^{d_{\mathrm{out}}\times d_{\mathrm{in}}}$.
+- For a scalar-valued function $g:\mathbb{R}^{d}\to\mathbb{R}$, $\nabla_{\mathbf{x}}g$ is a column vector whose $j$-th entry is $\partial g/\partial x_j$.
+- For $f:\mathbb{R}^{d_x}\to\mathbb{R}^{d_f}$, the repository Jacobian convention is
+  $J_f(\mathbf{x})_{ij}=\partial f_i/\partial x_j$, so Jacobian rows index output components and columns index input components.
+- PyTorch stores feature vectors along the final tensor axis. A tensor with shape `(B, D)` is interpreted as a batch of $B$ mathematical column vectors even though the storage layout is two-dimensional.
+
+### Tensor layout
+
+- `B` is batch size, `T` is sequence length, and `D` is feature or state dimension.
+- Sequence tensors are batch-first by default: `x.shape == (B, T, D)`.
+- Recurrent or dynamical state tensors use `h.shape == (B, D)` or `x.shape == (B, D)`.
+- A justified exception must document both the mathematical shape and every tensor axis at the public interface.
 
 When writing code, bridge notation to tensor shapes explicitly in comments:
 
 ```python
-# x: (batch, d_x)  —  state vector x(t)
+# x: (B, D) — batch of state vectors x(t)
 ```
+
+### ODE callable convention
+
+- ODE vector fields use time-first signatures: `f(t, x)` without external input and `f(t, x, u)` with input.
+- These signatures correspond to $\dot{\mathbf{x}}=f_{\boldsymbol{\theta}}(t,\mathbf{x},\mathbf{u})$.
+- Never introduce `f(x, t)`. Wrappers around third-party libraries must adapt their signature at the boundary rather than spreading a second convention through the repository.
+
+### Translating paper notation
+
+- Preserve and identify original paper notation when a model is first presented.
+- Immediately map each paper symbol to repository canonical notation.
+- Do not silently rewrite symbols in a way that obscures the source derivation. For example, if a paper uses $x_t$ for input and $h_t$ for hidden state, state explicitly that the repository uses $\mathbf{u}(t)$ for input and $\mathbf{x}(t)$ (or $\mathbf{h}(t)$ when appropriate) for dynamical state.
+
+### Numerical precision
+
+- Use `torch.float64` for numerical-analysis experiments, solver convergence tests, analytical comparisons, and sensitive gradient checks.
+- Use `torch.float32` for ordinary neural-network training unless an experiment documents a reason for another dtype.
+- Tests must set dtype explicitly whenever their tolerance or conclusion depends on precision.
 
 ## 5. Python Code Conventions
 
@@ -91,7 +126,13 @@ Every Stage follows this default sequence:
 READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE
 ```
 
-The agent must not skip stages without an explicit learner request. Even then, note the skip in `learning/decisions.md`.
+This is the complete lifecycle, not a claim that every phase applies to every Stage. Each Stage's row in the phase-profile table in `learning/curriculum.md` is authoritative:
+
+- Every phase is either applicable or marked `N/A` with a short reason.
+- Applicable phases must occur in order and may not be skipped by default.
+- `N/A` is not an informal skip; it must have a Stage-specific reason in the curriculum.
+- If Stage scope changes and an `N/A` phase becomes meaningful, update the phase profile and record the decision before entering that phase.
+- An explicit learner request may alter the workflow, but the deviation and rationale must be recorded in `learning/decisions.md`.
 
 ## 9. Stage Boundaries
 

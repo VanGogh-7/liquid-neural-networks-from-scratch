@@ -1,5 +1,32 @@
 # Curriculum — Liquid Neural Networks from First Principles
 
+## Stage Phase Profiles
+
+The standard lifecycle is `READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE`. The table below explicitly defines which phases apply to each Stage. Applicable phases remain ordered and cannot be skipped by default. Every `N/A` entry includes its reason.
+
+| Stage | Applicable phases, in order | N/A phases and reasons |
+| --- | --- | --- |
+| 00 | READ → EXPLAIN → DERIVE → QUESTION → WRITE → REVIEW → DONE | IMPLEMENT: no algorithm or software component is being built. TEST: no executable numerical behavior exists. EXPERIMENT: notation policy has no empirical claim. |
+| 01 | READ → EXPLAIN → DERIVE → QUESTION → EXPERIMENT → WRITE → REVIEW → DONE | IMPLEMENT: the Stage establishes ODE concepts rather than a reusable solver. TEST: no reusable implementation is produced. |
+| 02 | READ → EXPLAIN → DERIVE → QUESTION → EXPERIMENT → WRITE → REVIEW → DONE | IMPLEMENT: the Stage develops dynamical-systems analysis rather than a library component. TEST: numerical illustrations are reviewed as experiments, not software tests. |
+| 03 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 04 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 05 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 06 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 07 | READ → EXPLAIN → DERIVE → QUESTION → WRITE → REVIEW → DONE | IMPLEMENT: implementation belongs to Stage 08. TEST: there is no Stage 07 software artifact. EXPERIMENT: circuit and LTC numerical studies begin after the derivation is accepted. |
+| 08 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 09 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 10 | READ → EXPLAIN → DERIVE → QUESTION → WRITE → REVIEW → DONE | IMPLEMENT: implementation belongs to Stage 11. TEST: there is no Stage 10 software artifact. EXPERIMENT: CfC benchmarking begins after the derivation is accepted. |
+| 11 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 12 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 13 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 14 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 15 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 16 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 17 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 18 | READ → EXPLAIN → DERIVE → QUESTION → IMPLEMENT → TEST → EXPERIMENT → WRITE → REVIEW → DONE | None. |
+| 19 | READ → EXPLAIN → QUESTION → EXPERIMENT → WRITE → REVIEW → DONE | DERIVE: no single frontier model is mandatory. IMPLEMENT and TEST: the survey has no fixed software deliverable. If a specific reproduction is selected, amend this profile and record the decision first. |
+
 ## PART I — Mathematical & Continuous-Time Foundations
 
 ### Stage 00 — Mathematical Language and Notation
@@ -13,11 +40,16 @@
   - Norms
   - Eigenvalues and eigenvectors
   - Element-wise operations
-  - Continuous-time notation ($\dot{\mathbf{x}}$, $t$, $\Delta t$)
-  - Tensor shape conventions
+  - Continuous and sampled time notation ($t$, $k$, $t_k$, $\Delta t_k$)
+  - Column-vector, gradient, and Jacobian conventions
+  - Batch-first tensor shapes `(B, T, D)` and state shapes `(B, D)`
+  - Time-first ODE callables: `f(t, x)` and `f(t, x, u)`
+  - Paper-notation-to-repository-notation translation
+  - Numerical precision policy
   - Mathematical notation ↔ PyTorch tensor mapping
-- **Implementation Goal**: Create a `notation` reference sheet and a `tensor_shapes` reference sheet. Write a short script demonstrating the mapping between math notation and PyTorch tensor shapes.
-- **Experiment Goal**: None (foundations stage).
+- **Implementation Goal**: N/A — Stage 00 defines language and documentation, not an algorithm or software component.
+- **Experiment Goal**: N/A — notation conventions do not make an empirical claim.
+- **Writing Goal**: Create and review the `notation` and `tensor_shapes` reference sheets, including worked math-to-PyTorch shape mappings.
 - **Exit Criteria**:
   - Can read any formula in the curriculum without notation ambiguity
   - Can map any mathematical vector/matrix to its PyTorch tensor shape
